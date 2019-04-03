@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Vibration, AppState } from 'react-native'
-import { Navigator } from 'react-native-navigation'
-import { Screen, Container, Scanner, Device } from '@kancha'
+import { Navigation } from 'react-native-navigation'
+import { Screen, Container, Scanner, Device, Theme } from '@kancha'
 // import Permissions from 'react-native-permissions'
 
 // Redux Connect
@@ -37,7 +37,8 @@ class ScannerScreen extends React.Component<ScannerScreenProps, ScannerScreenSta
       appState: AppState.currentState,
     }
 
-    this.startScanner = this.startScanner.bind(this)
+    Navigation.events().bindComponent(this)
+
     this.toggleScannerMode = this.toggleScannerMode.bind(this)
     this.onBarCodeRead = this.onBarCodeRead.bind(this)
     this.closeScanner = this.closeScanner.bind(this)
@@ -45,6 +46,14 @@ class ScannerScreen extends React.Component<ScannerScreenProps, ScannerScreenSta
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange)
+  }
+
+  componentDidAppear() {
+    this.toggleScannerMode(true)
+  }
+
+  componentDidDisappear() {
+    this.toggleScannerMode(false)
   }
 
   componentWillUnmount() {
@@ -55,9 +64,6 @@ class ScannerScreen extends React.Component<ScannerScreenProps, ScannerScreenSta
     this.setState({ ...this.state, appState: nextAppState })
   }
 
-  /**
-   * Prevent scanner from always scanning
-   */
   toggleScannerMode(enabled: boolean) {
     this.setState({
       ...this.state,
@@ -65,41 +71,25 @@ class ScannerScreen extends React.Component<ScannerScreenProps, ScannerScreenSta
     })
   }
 
-  startTimer() {
-    this.timeout = setTimeout(() => {
-      this.toggleScannerMode(false)
-      this.stopScannerTimer()
-    }, SCANNER_TIMEOUT)
-  }
-
-  startScanner() {
-    this.toggleScannerMode(true)
-    clearTimeout(this.timeout)
-    this.startTimer()
-  }
-
-  stopScannerTimer() {
-    clearTimeout(this.timeout)
-    this.toggleScannerMode(false)
-  }
-
   onBarCodeRead(event: any) {
-    if (!this.state.isEnabled) return
-
     Vibration.vibrate(400, false)
-    this.toggleScannerMode(false)
     this.props.handleQRCodeURL(event)
+    this.toggleScannerMode(false)
     this.closeScanner()
   }
 
   toggleIOSDrawer() {
-    this.props.navigator.toggleDrawer({
-      side: 'right',
+    Navigation.mergeOptions('Scanner', {
+      sideMenu: {
+        right: {
+          visible: false,
+        },
+      },
     })
   }
 
   popAndroidScannerView() {
-    this.props.navigator.dismissModal()
+    // this.props.navigator.dismissModal()
   }
 
   closeScanner() {
@@ -111,20 +101,15 @@ class ScannerScreen extends React.Component<ScannerScreenProps, ScannerScreenSta
       }, 250)
     }
 
-    this.stopScannerTimer()
+    // this.stopScannerTimer()
   }
 
   render() {
     return (
       <Screen config={Screen.Config.NoScroll} type={Screen.Types.Primary}>
-        <Container flex={1}>
-          {this.state.appState === 'active' && (
-            <Scanner
-              isEnabled={this.state.isEnabled}
-              onBarcodeRead={this.onBarCodeRead}
-              startScanner={this.startScanner}
-              closeScanner={this.closeScanner}
-            />
+        <Container flex={1} backgroundColor={'#000000'}>
+          {this.state.isEnabled && this.state.appState === 'active' && (
+            <Scanner onBarcodeRead={this.onBarCodeRead} closeScanner={this.closeScanner} />
           )}
         </Container>
       </Screen>

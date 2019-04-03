@@ -5,31 +5,19 @@ import { RNCamera } from 'react-native-camera'
 
 interface ScannerProps {
   /**
-   * Scanner enabled
-   */
-  isEnabled: boolean
-  /**
    * Callback when barcode has been read
    */
   onBarcodeRead: (event: any) => void
-  /**
-   * Callback when barcode has been read
-   */
-  startScanner: () => void
-
   /**
    * Close the scanner
    */
   closeScanner: () => void
 }
 
-const QRCodeScanner: React.FC<ScannerProps> = ({ isEnabled, onBarcodeRead, startScanner, closeScanner }) => {
+const QRCodeScanner: React.FC<ScannerProps> = ({ onBarcodeRead, closeScanner }) => {
   const scannerViewStyles: ViewStyle = {
     flex: 1,
     justifyContent: 'flex-end',
-    borderWidth: 5,
-    borderRadius: 40,
-    borderColor: isEnabled ? 'rgba(255,0,0, 0.3)' : 'rgba(0,0,0, 0)',
   }
 
   return (
@@ -62,7 +50,7 @@ const QRCodeScanner: React.FC<ScannerProps> = ({ isEnabled, onBarcodeRead, start
       }
     >
       <SafeAreaView style={scannerViewStyles}>
-        <ScannerControl startScanner={startScanner} working={isEnabled} closeScanner={closeScanner} />
+        {/* <ScannerControl startScanner={startScanner} working={isEnabled} closeScanner={closeScanner} /> */}
       </SafeAreaView>
     </RNCamera>
   )
