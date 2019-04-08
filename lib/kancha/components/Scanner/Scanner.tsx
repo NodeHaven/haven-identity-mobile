@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ViewStyle, SafeAreaView } from 'react-native'
-import { Container, ScannerControl, Text } from '@kancha'
+import { Container, Button, Text, Icon } from '@kancha'
 import { RNCamera } from 'react-native-camera'
 
 interface ScannerProps {
@@ -50,7 +50,14 @@ const QRCodeScanner: React.FC<ScannerProps> = ({ onBarcodeRead, closeScanner }) 
       }
     >
       <SafeAreaView style={scannerViewStyles}>
-        {/* <ScannerControl startScanner={startScanner} working={isEnabled} closeScanner={closeScanner} /> */}
+        <Button
+          type={Button.Types.Primary}
+          onPress={() => {
+            ''
+          }}
+          block={Button.Block.Clear}
+          icon={<Icon size={30} name={'x'} />}
+        />
       </SafeAreaView>
     </RNCamera>
   )
