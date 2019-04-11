@@ -3,6 +3,7 @@
   "version": "0.0.8",
   "private": true,
   "scripts": {
+    "fxrncamera": "bash ./scripts/fix-rn-camera-search-paths.sh ./node_modules/react-native-camera/ios/RNCamera.xcodeproj/project.pbxproj",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "build-solidity-coder": "browserify node_modules/web3/lib/solidity/coder.js --s Coder | derequire > lib/browserified/coder.js",
     "build-bip39": "browserify node_modules/bip39/index.js --s BIP39 | derequire > lib/browserified/bip39.js",
@@ -122,7 +123,7 @@
     "react-native": "0.55.3",
     "react-native-animatable": "^1.2.4",
     "react-native-cache": "^1.0.3",
-    "react-native-camera": "^2.0.1",
+    "react-native-camera": "^2.2.2",
     "react-native-device-info": "^0.13.0",
     "react-native-fetch-blob": "^0.10.8",
     "react-native-firebase": "^5.2.5",

@@ -7810,10 +7810,10 @@ react-native-cache@^1.0.3:
     async "^2.6.1"
     mocha "^5.2.0"
 
-react-native-camera@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-2.0.1.tgz#2263d9c656054a137e5abddaaa0d02d14dc3fb38"
-  integrity sha512-ZAKYegDYLVvGu48HfDMOu7CL/ybcxLLr8VdUjXqIFcyd4AVgePGu4yTm9JNSaWMe1G6lbUhERXJPSvGIfApzKA==
+react-native-camera@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-2.2.2.tgz#2636e3ec681aef5a786ae7856820ee64e59fa060"
+  integrity sha512-sdokHPlHsPNL0VoCfpuHwnRl6qISE+olZkCZe0zTgkEaTEniD64p37x3+acaJtNwAzxAznAISUkvsyBprBUETQ==
   dependencies:
     prop-types "^15.6.2"
 
