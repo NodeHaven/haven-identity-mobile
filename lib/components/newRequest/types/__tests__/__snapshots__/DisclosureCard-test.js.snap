@@ -662,7 +662,7 @@ exports[`DisclosureCard missing claims renders disabled button and descriptions 
               }
             }
           >
-             Share to Login  
+             Share to Login 
           </Text>
         </Text>
       </View>
@@ -1612,7 +1612,7 @@ exports[`DisclosureCard missing claims renders disabled button and descriptions 
               }
             }
           >
-             Share to Login  
+             Share to Login 
           </Text>
         </Text>
       </View>
@@ -2322,7 +2322,7 @@ exports[`DisclosureCard missing claims renders disabled button and descriptions 
               }
             }
           >
-             Share to Login  
+             Share to Login 
           </Text>
         </Text>
       </View>
@@ -2990,7 +2990,7 @@ exports[`DisclosureCard missing claims renders enabled button and descriptions f
               }
             }
           >
-             Share to Login  
+             Share to Login 
           </Text>
         </Text>
       </View>
@@ -5182,7 +5182,7 @@ exports[`DisclosureCard renders correctly with a full disclosure request and ver
               }
             }
           >
-             Share to Login  
+             Share to Login 
           </Text>
         </Text>
       </View>
