@@ -37,8 +37,7 @@ platform :ios do
        match(type: "appstore")
        pilot(
          ipa: "./gym/uPort.ipa",
-         skip_submission: true,
-         skip_waiting_for_build_processing: true
+         skip_submission: true
        )
   end
 end

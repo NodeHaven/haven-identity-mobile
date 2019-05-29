@@ -1,4 +1,4 @@
-import MigrationScreen from '../components/Migrations/MigrationScreen'
+import MigrationScreen from '../components/Migrations/MigrationScreen';
 
 //
 // This file is part of uPort Mobile App.
@@ -23,33 +23,31 @@ export const STARTED_MIGRATION_STEP = 'STARTED_MIGRATION_STEP'
 export const COMPLETED_MIGRATION_STEP = 'COMPLETED_MIGRATION_STEP'
 export const FAILED_MIGRATION_STEP = 'FAILED_MIGRATION_STEP'
 
-import SCREENS from 'uPortMobile/lib/screens/Screens'
-
 export enum MigrationTarget {
-  Legacy = 'Legacy',
-  MissingKeys = 'MissingKeys',
-  RecoverSeed = 'RecoverSeed',
+  Legacy = "Legacy",
+  MissingKeys = "MissingKeys",
+  RecoverSeed = "RecoverSeed"
 }
 
 export enum MigrationStep {
   MigrateLegacy = 'MigrateLegacy',
-  EnterSeed = 'EnterSeed',
+  EnterSeed = 'EnterSeed'
 }
 
 export enum MigrationStatus {
   NotStarted,
   Started,
   Completed,
-  Error,
+  Error
 }
 
 export interface Recipes {
   [index: string]: MigrationStep[]
 }
 
-export const targetRecipes: Recipes = {
+export const targetRecipes : Recipes = {
   Legacy: [MigrationStep.MigrateLegacy],
-  RecoverSeed: [MigrationStep.EnterSeed],
+  RecoverSeed: [MigrationStep.EnterSeed]
 }
 
 export interface MigrationScreens {
@@ -57,17 +55,18 @@ export interface MigrationScreens {
 }
 
 export const migrationScreens: MigrationScreens = {
-  RecoverSeed: SCREENS.RECOVERY.RestoreSeedInstructions,
+  RecoverSeed: 'recovery.seedInstructions'
 }
 
 export interface TargetAction {
-  type: 'ADD_MIGRATION_TARGET' | 'RUN_MIGRATIONS'
-  target: MigrationTarget
+  type: 'ADD_MIGRATION_TARGET' | 'RUN_MIGRATIONS',
+  target: MigrationTarget,
   _backup?: boolean
 }
 
 export interface StepAction {
-  type: 'STARTED_MIGRATION_STEP' | 'COMPLETED_MIGRATION_STEP' | 'FAILED_MIGRATION_STEP'
-  step: MigrationStep
+  type: 'STARTED_MIGRATION_STEP' | 'COMPLETED_MIGRATION_STEP' | 'FAILED_MIGRATION_STEP',
+  step: MigrationStep,
   _backup?: boolean
 }
+

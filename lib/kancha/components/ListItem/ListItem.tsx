@@ -101,11 +101,6 @@ interface ListItemProps {
    * Provide a testID for e2e tests
    */
   testID?: string
-
-  /**
-   * Disbale accessbilityLabel on this item to allow sub items use to them
-   */
-  accessible?: boolean
 }
 
 /** Move to kancha utils */
@@ -133,8 +128,8 @@ const ListItem: React.FunctionComponent<ListItemProps> = props => {
       underlayColor={Theme.colors.primary.underlay}
       disabled={props.disabled}
       testID={props.testID}
-      accessible={props.accessible}
-      accessibilityLabel={props.testID}>
+      accessibilityLabel={props.testID}
+    >
       <Container flex={1} flexDirection={'row'}>
         {props.avatarComponent && (
           <Container alignItems={'center'} justifyContent={'center'} paddingLeft paddingTop={8} paddingBottom={8}>
@@ -155,14 +150,15 @@ const ListItem: React.FunctionComponent<ListItemProps> = props => {
           marginLeft
           paddingTop={10}
           paddingBottom={10}
-          paddingRight>
+          paddingRight
+        >
           <Container flexDirection={'row'} flex={1} viewStyle={{ overflow: 'hidden' }}>
             <Container flex={1}>
               {props.title && <Text type={Text.Types.SubTitle}>{props.title}</Text>}
               {props.editMode ? (
                 <Container>
                   <TextInput
-                    style={{ fontSize: 18, padding: 0, flex: 1, color: '#000000' }}
+                    style={{ fontSize: 18, padding: 0, flex: 1 }}
                     defaultValue={(props.children && props.children.toString()) || ''}
                     onChangeText={props.updateItem}
                     placeholder={'Not provided'}
@@ -170,7 +166,7 @@ const ListItem: React.FunctionComponent<ListItemProps> = props => {
                   />
                 </Container>
               ) : (
-                <Container flexDirection={'row'} alignItems={'center'} paddingTop={3}>
+                <Container flexDirection={'row'} alignItems={'center'}>
                   <Text type={Text.Types.ListItem}>{props.children}</Text>
                   {props.selected && (
                     <Container paddingLeft={8}>
@@ -198,10 +194,6 @@ const ListItem: React.FunctionComponent<ListItemProps> = props => {
       </Container>
     </TouchableHighlight>
   )
-}
-
-ListItem.defaultProps = {
-  accessible: true,
 }
 
 export default ListItem

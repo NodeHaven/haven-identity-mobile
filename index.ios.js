@@ -1,3 +1,3 @@
-import App from './lib/navigators'
+import { start } from './lib/start'
 
-App()
+start()

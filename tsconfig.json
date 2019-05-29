@@ -18,7 +18,7 @@
       }
     },
     "types": ["jest"],
-    "include": ["./lib/**/*", "@types"],
+    "include": ["./lib/**/*"],
     "exclude": [
       "node_modules",
     ],

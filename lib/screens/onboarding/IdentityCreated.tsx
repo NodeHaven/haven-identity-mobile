@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { Image } from 'react-native'
-import { Screen, Container, Images, Text, Theme } from '@kancha'
+import { Screen, Container, Images, Text } from '@kancha'
 
 interface IdentityCreatedProps {}
 
 class IdentityCreated extends React.Component<IdentityCreatedProps> {
+  static navigatorStyle = {
+    navBarHidden: true,
+  }
   render() {
     return (
       <Screen

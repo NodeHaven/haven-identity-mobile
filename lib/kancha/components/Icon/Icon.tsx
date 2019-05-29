@@ -24,13 +24,11 @@ import { Device } from '@kancha'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
 
 const IconSets: { [index: string]: any } = {
   ionicons: Ionicons,
   feather: Feather,
   fontawesome: FontAwesome,
-  evil: EvilIcons,
 }
 
 interface IconProps {
@@ -70,8 +68,6 @@ interface IconsStatic {
   edit: string
   more: string
   checkmark: string
-  scan: string
-  qrcode: string
 }
 
 const Icons: IconsStatic = {
@@ -83,22 +79,21 @@ const Icons: IconsStatic = {
   checkbox_checked: Device.isIOS ? 'ios-checkmark-circle' : 'md-checkmark-circle',
   rocket: Device.isIOS ? 'ios-rocket' : 'md-rocket',
   share: Device.isIOS ? 'ios-share' : 'md-share',
-  scan: Device.isIOS ? 'ios-qr-scanner' : 'md-qr-scanner',
-  close: Device.isIOS ? 'close' : 'close',
+  close: 'x',
+  edit: 'edit',
+  more: 'ios-more',
   checkmark: Device.isIOS ? 'ios-checkmark' : 'md-checkmark',
-  edit: Device.isIOS ? 'edit' : 'edit',
-  more: Device.isIOS ? 'ios-more' : 'ios-more',
-  qrcode: Device.isIOS ? 'qrcode' : 'qrcode',
+  qrcode: 'qrcode',
 }
 
-const IconImageSource = (font: string, icon: string, size: number) => {
-  return IconSets[font].getImageSource(icon, size)
-}
-
-const Icon: React.FunctionComponent<IconProps> & {
-  Names: IconsStatic
-  getImageSource: (font: string, icon: string, size: number) => any
-} = ({ font, name, size, color, animated, image }: IconProps) => {
+const Icon: React.FunctionComponent<IconProps> & { Names: IconsStatic } = ({
+  font,
+  name,
+  size,
+  color,
+  animated,
+  image,
+}: IconProps) => {
   const IconFont = font ? IconSets[font] : Ionicons
   const spinValue = new Animated.Value(0)
 
@@ -132,6 +127,5 @@ Icon.defaultProps = {
 }
 
 Icon.Names = Icons
-Icon.getImageSource = IconImageSource
 
 export default Icon

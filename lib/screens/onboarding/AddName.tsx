@@ -1,10 +1,9 @@
 import * as React from 'react'
 import { Screen, Container, Input, NavBar, Text } from '@kancha'
-import { Navigation } from 'react-native-navigation'
+import { Navigator } from 'react-native-navigation'
 
 interface AddNameProps {
   navigator: Navigator
-  componentId: string
 }
 
 class AddName extends React.Component<AddNameProps> {
@@ -33,8 +32,10 @@ class AddName extends React.Component<AddNameProps> {
         footerNavComponent={
           <NavBar
             dividerTop
-            leftButtonAction={() => Navigation.pop(this.props.componentId)}
-            rightButtonAction={() => Navigation.push(this.props.componentId, {})}
+            leftButtonAction={() => this.props.navigator.pop()}
+            rightButtonAction={() =>
+              this.props.navigator.push({ screen: 'onboarding2.AddAvatar', passProps: { name: this.state.name } })
+            }
             rightButttonText={'Next'}
             rightButtonDisabled={!this.state.valid}
           />
