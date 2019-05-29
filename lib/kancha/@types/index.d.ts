@@ -8,10 +8,6 @@ declare module 'react-native-keyboard-aware-scrollview' {
 }
 
 declare namespace Kancha {
-  export interface NavigationScreen {
-    componentId: string
-  }
-
   export interface TextTypesStatic {
     H1: 'h1'
     H2: 'h2'

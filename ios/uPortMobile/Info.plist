@@ -34,7 +34,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.6.7</string>
+	<string>1.6.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -52,7 +52,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>464</string>
+	<string>446</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -73,10 +73,6 @@
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>mailto</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
@@ -208,5 +204,9 @@
 			</dict>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+ 	<array>
+ 		<string>mailto</string>
+ 	</array>
 </dict>
 </plist>

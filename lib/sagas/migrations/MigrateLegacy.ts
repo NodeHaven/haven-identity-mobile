@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with uPort Mobile App.  If not, see <http://www.gnu.org/licenses/>.
 //
-import { call, select, put, spawn } from 'redux-saga/effects'
+import { call, select, put } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import {
   createIdentityKeyPair,
@@ -29,7 +29,7 @@ import { createAttestationToken } from 'uPortMobile/lib/sagas/jwt'
 import { MigrationStep } from 'uPortMobile/lib/constants/MigrationActionTypes'
 import { saveMessage } from 'uPortMobile/lib/actions/processStatusActions'
 import { resetHub } from 'uPortMobile/lib/actions/hubActions'
-import { subAccounts, currentAddress, ownClaimsMap, hasMainnetAccounts } from 'uPortMobile/lib/selectors/identities'
+import { subAccounts, currentAddress, ownClaimsMap } from 'uPortMobile/lib/selectors/identities'
 import { hasAttestations } from 'uPortMobile/lib/selectors/attestations'
 import {
   updateIdentity,
@@ -43,9 +43,6 @@ import { track } from 'uPortMobile/lib/actions/metricActions'
 import { handleURL } from 'uPortMobile/lib/actions/requestActions'
 
 import { Alert } from 'react-native'
-import { dataBackup } from 'uPortMobile/lib/selectors/settings';
-import { setDataBackup } from 'uPortMobile/lib/actions/settingsActions';
-import { handleStartSwitchingSettingsChange } from '../hubSaga';
 
 const step = MigrationStep.MigrateLegacy
 
@@ -80,24 +77,7 @@ export function* migrate(): any {
   const oldRoot = yield select(currentAddress)
   const accounts = yield select(subAccounts, oldRoot)
   const own = (yield select(ownClaimsMap)) || {}
- 
-  const backedup = yield select(dataBackup)
-  if (backedup) {
-    yield call(handleStartSwitchingSettingsChange, { isOn: false })
-  }
-  for (const account of accounts) {
-    const available = yield call(canSignFor, account.address)
-    if (!available) {
-      yield put(
-        updateIdentity(account.address, {
-          disabled: true,
-          error: `Legacy Identity has been Disabled. Keys are no longer available.`,
-        }),
-      )
-    }
-  }
-
-  const createOwnershipLink = (yield select(hasAttestations)) || (yield select(hasMainnetAccounts))
+  const createOwnershipLink = yield select(hasAttestations)
 
   let newRoot
   if (yield call(hasWorkingSeed)) {
@@ -138,6 +118,8 @@ export function* migrate(): any {
     if (createOwnershipLink) {
       const link = yield call(createAttestationToken, oldRoot, newRoot, { owns: oldRoot })
       yield put(handleURL(`me.uport:req/${link}`, { popup: false }))
+    } else {
+      yield put(updateIdentity(oldRoot, { parent: newRoot }))
     }
   } else {
     yield put(
@@ -147,8 +129,27 @@ export function* migrate(): any {
       }),
     )
   }
+
+  for (const account of accounts) {
+    const available = yield call(canSignFor, account.address)
+    if (available) {
+      yield put(
+        updateIdentity(account.address, {
+          parent: newRoot,
+        }),
+      )
+    } else {
+      yield put(
+        updateIdentity(account.address, {
+          disabled: true,
+          error: `Legacy Identity has been Disabled. Keys are no longer available.`,
+        }),
+      )
+    }
+  }
+  yield put(resetHub())
   yield put(saveMessage(step, 'New mainnet identity is created'))
-  yield call(handleStartSwitchingSettingsChange, { isOn: true })
+
   return true
 }
 

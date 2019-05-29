@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { Image, Modal } from 'react-native'
+import { Image, Modal, KeyboardAvoidingView } from 'react-native'
 import { ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { Screen, Container, Input, Text, Button, Theme, Icon, Images, Checkbox, Section, ListItem } from '@kancha'
-import { Navigation } from 'react-native-navigation'
-import SCREENS from '../Screens'
+import { Navigator } from 'react-native-navigation'
+
 import photoSelectionHandler from 'uPortMobile/lib/utilities/photoSelection'
 import { currentAddress } from '../../selectors/identities'
 import { activationEvent } from 'uPortMobile/lib/actions/userActivationActions'
 import { track } from 'uPortMobile/lib/actions/metricActions'
-import { startMain } from 'uPortMobile/lib/navigators/navigation'
+import { startMain } from 'uPortMobile/lib/start'
 import { createIdentity, addClaims, addImage } from 'uPortMobile/lib/actions/uportActions'
 import { registerDeviceForNotifications } from 'uPortMobile/lib/actions/snsRegistrationActions'
 
@@ -21,7 +21,6 @@ interface ImageObj {
 }
 
 interface CreateIdentityProps {
-  componentId: string
   navigator: Navigator
   address: string
 
@@ -53,25 +52,15 @@ interface AvatarProps {
   text: string
 }
 
-const navOptions = {
-  topBar: {
-    background: {
-      color: Theme.colors.primary.background,
-    },
-    backButton: { color: Theme.colors.primary.brand },
-  },
-}
-
 const Avatar: React.FC<AvatarProps> = ({ image, text }) => {
   const avatar = image ? { uri: image } : Images.profile.avatar
   return <Image source={avatar} style={{ width: 150, height: 150, borderRadius: 75 }} resizeMode={'cover'} />
 }
 
 class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentityState> {
-  static options(passProps: any) {
-    return {
-      ...navOptions,
-    }
+  static navigatorStyle = {
+    navBarBackgroundColor: Theme.colors.primary.background,
+    navBarButtonColor: Theme.colors.primary.brand,
   }
 
   constructor(props: CreateIdentityProps) {
@@ -116,9 +105,8 @@ class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentity
         type={Screen.Types.Primary}
         config={Screen.Config.SafeScroll}
         statusBarHidden
-        footerNavDivider
         footerNavComponent={
-          <Container alignItems={'center'} paddingBottom>
+          <Container alignItems={'center'}>
             <Container w={300}>
               <Button
                 testID={TESTID.ONBOARDING_CREATE_IDENTITY}
@@ -134,7 +122,8 @@ class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentity
               />
             </Container>
           </Container>
-        }>
+        }
+      >
         {this.renderUserAddingInfo()}
       </Screen>
     )
@@ -151,7 +140,8 @@ class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentity
             onRequestClose={() => ''}
             animationType={'slide'}
             transparent={true}
-            visible={this.state.identityCreationSuccess}>
+            visible={this.state.identityCreationSuccess}
+          >
             {this.renderIdentityCreationSuccess()}
           </Modal>
 
@@ -191,7 +181,6 @@ class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentity
         <Container>
           <Section>
             <ListItem
-              accessible={false}
               avatarComponent={
                 <Checkbox
                   testID={TESTID.ONBOARDING_TERMS_RADIO}
@@ -199,18 +188,11 @@ class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentity
                   toggleSelect={checked => this.setState({ termsAccepted: checked })}
                 />
               }
-              onPress={() =>
-                Navigation.push(this.props.componentId, {
-                  component: {
-                    name: SCREENS.Terms,
-                    options: navOptions,
-                  },
-                })
-              }>
+              onPress={() => this.props.navigator.push({ screen: 'onboarding2.Terms' })}
+            >
               Accept terms and conditions
             </ListItem>
             <ListItem
-              accessible={false}
               last
               avatarComponent={
                 <Checkbox
@@ -220,13 +202,15 @@ class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentity
                 />
               }
               onPress={() =>
-                Navigation.push(this.props.componentId, {
-                  component: {
-                    name: SCREENS.Privacy,
-                    options: navOptions,
+                this.props.navigator.push({
+                  screen: 'settings.privacy',
+                  navigatorStyle: {
+                    navBarBackgroundColor: Theme.colors.primary.background,
+                    navBarButtonColor: Theme.colors.primary.brand,
                   },
                 })
-              }>
+              }
+            >
               Accept privacy policy
             </ListItem>
           </Section>
@@ -246,7 +230,8 @@ class CreateIdentity extends React.Component<CreateIdentityProps, CreateIdentity
           marginLeft
           marginRight
           background={'primary'}
-          viewStyle={{ shadowRadius: 30, elevation: 4, shadowColor: 'black', shadowOpacity: 0.2, borderRadius: 5 }}>
+          viewStyle={{ shadowRadius: 30, elevation: 4, shadowColor: 'black', shadowOpacity: 0.2, borderRadius: 5 }}
+        >
           <Container alignItems={'center'} paddingBottom paddingTop>
             <Text type={Text.Types.H2} bold>
               You are all set!
