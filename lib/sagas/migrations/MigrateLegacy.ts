@@ -138,6 +138,8 @@ export function* migrate(): any {
     if (createOwnershipLink) {
       const link = yield call(createAttestationToken, oldRoot, newRoot, { owns: oldRoot })
       yield put(handleURL(`me.uport:req/${link}`, { popup: false }))
+    } else {
+      yield put(updateIdentity(oldRoot, { parent: newRoot }))
     }
   } else {
     yield put(
@@ -148,7 +150,9 @@ export function* migrate(): any {
     )
   }
   yield put(saveMessage(step, 'New mainnet identity is created'))
-  yield call(handleStartSwitchingSettingsChange, { isOn: true })
+  if (backedup) {
+    yield call(handleStartSwitchingSettingsChange, { isOn: true })
+  }
   return true
 }
 

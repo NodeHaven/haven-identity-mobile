@@ -19,7 +19,7 @@ interface ScannerProps {
   hasPermission: boolean | null
 }
 
-const NoPermission: React.FC<{ closeScanner: () => void }> = ({ closeScanner }) => {
+const NoPermission = () => {
   return (
     <Container flex={1} backgroundColor={'black'} alignItems={'center'} justifyContent={'center'} padding={20}>
       <Container paddingBottom>
@@ -31,14 +31,19 @@ const NoPermission: React.FC<{ closeScanner: () => void }> = ({ closeScanner }) 
         QR scanner requires camera access. Enable camera access in settings so you can scan QR codes and start
         connecting to apps.
       </Text>
-      <Container marginTop={40}>
-        <Button
-          type={Button.Types.Secondary}
-          onPress={() => closeScanner()}
-          block={Button.Block.Clear}
-          buttonText={'Close'}
-        />
+    </Container>
+  )
+}
+
+const PendingPermission = () => {
+  return (
+    <Container flex={1} backgroundColor={'black'} alignItems={'center'} justifyContent={'center'} padding={20}>
+      <Container paddingBottom>
+        <Text type={Text.Types.H2} textColor={'white'} textAlign={'center'}>
+          Permissions
+        </Text>
       </Container>
+      <Text type={Text.Types.SubTitle}>Checking if camera permissions are enabled...</Text>
     </Container>
   )
 }
@@ -64,7 +69,7 @@ const QRCodeScanner: React.FC<ScannerProps> = ({ onBarcodeRead, closeScanner, ha
       </SafeAreaView>
     </RNCamera>
   ) : (
-    <NoPermission closeScanner={closeScanner} />
+    <NoPermission />
   )
 }
 

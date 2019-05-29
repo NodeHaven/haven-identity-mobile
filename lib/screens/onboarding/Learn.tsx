@@ -20,7 +20,7 @@ const Learn: React.FC<LearnProps> = props => {
       backgroundImage={Images.backgrounds.purpleGradientHalve}
       statusBarHidden
       footerNavComponent={
-        <Container alignItems={'center'} paddingBottom>
+        <Container alignItems={'center'}>
           <Container w={300}>
             <Button
               testID={TESTID.ONBOARDING_LEARN_CONTINUE}
@@ -28,22 +28,20 @@ const Learn: React.FC<LearnProps> = props => {
               buttonText={'Continue'}
               type={Button.Types.Primary}
               block={Button.Block.Filled}
-              onPress={() =>
-                Navigation.push(props.componentId, {
-                  component: { name: SCREENS.CreateIdentity, options: { topBar: { elevation: 0, drawBehind: false } } },
-                })
-              }
+              onPress={() => Navigation.push(props.componentId, { component: { name: SCREENS.CreateIdentity } })}
             />
           </Container>
         </Container>
-      }>
+      }
+    >
       <Swiper
         style={{ marginTop: Device.isIOS ? 30 : 100 }}
         loop={false}
         autoplay
         bounces
         activeDotColor={Theme.colors.primary.brand}
-        paginationStyle={{ marginBottom: Device.isIOS ? -30 : -20 }}>
+        paginationStyle={{ marginBottom: Device.isIOS ? -30 : -20 }}
+      >
         {onboardingSlides.map((slide: OnboardingSwiperSlide) => {
           return <Slide key={slide.key} heading={slide.heading} content={slide.content} image={slide.image} />
         })}

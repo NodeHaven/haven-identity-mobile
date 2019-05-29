@@ -1,11 +1,8 @@
-import { Linking } from 'react-native'
+import { NativeModules } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { Theme, Icon, Device } from '../kancha'
 import SCREENS from '../screens/Screens'
 import { RNUportSigner } from 'react-native-uport-signer'
-import store from '../store/store'
-import { registerDeviceForNotifications } from 'uPortMobile/lib/actions/snsRegistrationActions'
-import { handleURL } from '../actions/requestActions'
 
 /**
  * This is called by the startUpSaga when the app is ready to launch
@@ -37,23 +34,6 @@ const listenForAndroidFabButtonEvent = () => {
             topBar: {
               visible: false,
             },
-          },
-        },
-      })
-    }
-  })
-}
-
-/**
- * Global listener for IOS Scan button
- */
-const listenerForIOSScanButton = () => {
-  Navigation.events().registerNavigationButtonPressedListener(({ buttonId }) => {
-    if (buttonId === 'scanButton') {
-      Navigation.mergeOptions('Scanner', {
-        sideMenu: {
-          right: {
-            visible: true,
           },
         },
       })
@@ -102,11 +82,6 @@ const startOnboarding = async () => {
           {
             component: {
               name: STARTUP_SCREEN,
-              options: {
-                topBar: {
-                  visible: false,
-                },
-              },
             },
           },
         ],
@@ -139,17 +114,6 @@ export async function startMain() {
   const notificationsIcon = await Icon.getImageSource('feather', 'bell', 26)
   const settingsIcon = await Icon.getImageSource('feather', 'settings', 26)
   const scanIcon = await Icon.getImageSource('ionicons', Icon.Names.scan, 30)
-  const rightButtonsCredentialScreen = Device.isIOS
-    ? {
-        id: 'scanButton',
-        icon: scanIcon,
-        color: 'white',
-      }
-    : {}
-  const defaultProfileEditButton = {
-    id: 'edit',
-    text: 'Edit',
-  }
 
   /**
    * Some options have not been updated in the nav library so we need to override it :(
@@ -197,31 +161,11 @@ export async function startMain() {
     },
   })
 
-  // Navigation.setRoot({
-  //   root: {
-  //     stack: {
-  //       children: [
-  //         {
-  //           component: {
-  //             name: SCREENS.Dummy,
-  //             options: {
-  //               topBar: {
-  //                 visible: false,
-  //               },
-  //             },
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   },
-  // })
-
   /**
    * Begin root
    */
   Navigation.setRoot({
     root: {
-      // @ts-ignore
       sideMenu: {
         right: {
           component: {
@@ -240,17 +184,7 @@ export async function startMain() {
                       component: {
                         name: SCREENS.Credentials,
                         options: {
-                          topBar: {
-                            rightButtons: [rightButtonsCredentialScreen],
-                            title: {
-                              text: 'Credentials',
-                              color: Theme.colors.inverted.text,
-                            },
-                            largeTitle: {
-                              visible: true,
-                              color: Theme.colors.inverted.text,
-                            },
-                          },
+                          topBar: navBarText('Credentials'),
                           bottomTab: {
                             icon: credentialsIcon,
                             iconColor: Theme.colors.primary.accessories,
@@ -279,18 +213,7 @@ export async function startMain() {
                       component: {
                         name: SCREENS.Profile,
                         options: {
-                          topBar: {
-                            noBorder: true,
-                            rightButtons: [defaultProfileEditButton],
-                            title: {
-                              text: '',
-                              color: Theme.colors.inverted.text,
-                            },
-                            largeTitle: {
-                              visible: true,
-                              color: Theme.colors.inverted.text,
-                            },
-                          },
+                          topBar: navBarText('', true),
                           bottomTab: {
                             icon: profileIcon,
                             iconColor: Theme.colors.primary.accessories,
@@ -412,20 +335,5 @@ export async function startMain() {
    */
   if (Device.isAndroid) {
     listenForAndroidFabButtonEvent()
-  } else if (Device.isIOS) {
-    listenerForIOSScanButton()
   }
-
-  /**
-   * Register for notifications
-   */
-  store.dispatch(registerDeviceForNotifications())
-
-  Linking.getInitialURL().then(url => {
-    store.dispatch(handleURL(url))
-  })
-
-  Linking.addEventListener('url', event => {
-    if (event && event.url) store.dispatch(handleURL(event.url))
-  })
 }

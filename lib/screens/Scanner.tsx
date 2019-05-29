@@ -46,12 +46,8 @@ export class ScannerScreen extends React.Component<ScannerScreenProps, ScannerSc
     this.closeScanner = this.closeScanner.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange)
-  }
-
-  async componentDidAppear() {
-    this.toggleScannerMode(true)
 
     let status = await Permissions.check('camera')
 
@@ -60,6 +56,10 @@ export class ScannerScreen extends React.Component<ScannerScreenProps, ScannerSc
     }
 
     this.setState({ ...this.state, hasPermission: status === 'authorized' })
+  }
+
+  componentDidAppear() {
+    this.toggleScannerMode(true)
   }
 
   componentDidDisappear() {
@@ -115,8 +115,8 @@ export class ScannerScreen extends React.Component<ScannerScreenProps, ScannerSc
   render() {
     return (
       <Screen config={Screen.Config.NoScroll} type={Screen.Types.Primary}>
-        <Container flex={1} backgroundColor={'#000000'}>
-          {this.state.appState === 'active' && this.state.isEnabled && (
+        <Container flex={1}>
+          {this.state.appState === 'active' && (
             <Scanner
               hasPermission={this.state.hasPermission}
               onBarcodeRead={this.onBarCodeRead}

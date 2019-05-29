@@ -32,7 +32,6 @@ export default {
   KeyChain: 'KeyChain',
 
   Request: 'Request',
-  StaticRequest: 'StaticRequest',
   NewRequest: 'NewRequest',
   NestedInfo: 'NestedInfo',
 
@@ -57,13 +56,4 @@ export default {
     Legacy: 'MigrationLegacy',
     Complete: 'MigrationComplete',
   },
-
-  /**
-   * For testing stuff
-   */
-  Dummy: 'Dummy',
-}
-
-export const COMPONENTS = {
-  Toast: 'Toast',
 }
