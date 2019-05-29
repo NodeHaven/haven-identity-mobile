@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Image } from 'react-native'
-import { Navigator } from 'react-native-navigation'
 import { connect } from 'react-redux'
-import { Screen, Container, Button, Text, Images } from '@kancha'
+import { Screen, Container, Button, Text, Images, Theme } from '@kancha'
+import SCREENS from '../Screens'
+import { Navigation } from 'react-native-navigation'
 
 import { track } from 'uPortMobile/lib/actions/metricActions'
 import { segmentId } from 'uPortMobile/lib/selectors/identities'
@@ -10,8 +11,8 @@ import { segmentId } from 'uPortMobile/lib/selectors/identities'
 import TESTID from 'uPortMobile/lib/e2e/testIDs'
 
 interface WelcomeProps {
-  navigator: Navigator
   trackSegment: (event: any) => any
+  componentId: string
 }
 
 class Welcome extends React.Component<WelcomeProps> {
@@ -25,8 +26,7 @@ class Welcome extends React.Component<WelcomeProps> {
         backgroundImage={Images.backgrounds.purpleGradientWithPattern}
         type={Screen.Types.Custom}
         config={Screen.Config.SafeNoScroll}
-        statusBarHidden
-      >
+        statusBarHidden>
         <Container flex={1}>
           <Container flex={1} justifyContent={'space-around'} alignItems={'center'} paddingTop={50}>
             <Image source={Images.branding.logoWhite} style={{ height: 100 }} resizeMode={'contain'} />
@@ -41,7 +41,18 @@ class Welcome extends React.Component<WelcomeProps> {
                 bold
                 fullWidth
                 buttonText={'Get Started'}
-                onPress={() => this.props.navigator.push({ screen: 'onboarding2.Learn' })}
+                onPress={() =>
+                  Navigation.push(this.props.componentId, {
+                    component: {
+                      name: SCREENS.Learn,
+                      options: {
+                        topBar: {
+                          elevation: 0,
+                        },
+                      },
+                    },
+                  })
+                }
                 type={Button.Types.Custom}
                 block={Button.Block.Filled}
               />
@@ -50,7 +61,22 @@ class Welcome extends React.Component<WelcomeProps> {
                 bold
                 fullWidth
                 buttonText={'Recover Identity'}
-                onPress={() => this.props.navigator.push({ screen: 'recovery.seedInstructions' })}
+                onPress={() =>
+                  Navigation.push(this.props.componentId, {
+                    component: {
+                      name: SCREENS.RECOVERY.RestoreSeedInstructions,
+                      options: {
+                        topBar: {
+                          backButton: {
+                            title: 'Back',
+                            color: Theme.colors.primary.brand,
+                            visible: true,
+                          },
+                        },
+                      },
+                    },
+                  })
+                }
                 type={Button.Types.Custom}
                 block={Button.Block.Clear}
               />
@@ -78,6 +104,6 @@ export const mapDispatchToProps = (dispatch: any) => {
 }
 
 export default connect(
-  mapDispatchToProps,
+  mapStateToProps,
   mapDispatchToProps,
 )(Welcome)

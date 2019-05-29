@@ -1,17 +1,18 @@
 import * as React from 'react'
+import { Navigation } from 'react-native-navigation'
+import SCREENS from '../Screens'
 import { Device, Screen, Images, Theme, Slide, NavBar, OnboardingSwiperSlide, Button, Container } from '@kancha'
-import { Navigator, NavigatorStyle } from 'react-native-navigation'
-import Swiper from 'react-native-swiper'
 import { OnboardingContent } from 'uPortMobile/lib/content/onboardingSlideContent'
+import Swiper from 'react-native-swiper'
 import TESTID from 'uPortMobile/lib/e2e/testIDs'
 
 const onboardingSlides: OnboardingSwiperSlide[] = OnboardingContent(Images)
 
 interface LearnProps {
-  navigator: Navigator
+  componentId: string
 }
 
-const Learn: React.FC<LearnProps> & { navigatorStyle: NavigatorStyle } = props => {
+const Learn: React.FC<LearnProps> = props => {
   return (
     <Screen
       type={Screen.Types.Custom}
@@ -19,7 +20,7 @@ const Learn: React.FC<LearnProps> & { navigatorStyle: NavigatorStyle } = props =
       backgroundImage={Images.backgrounds.purpleGradientHalve}
       statusBarHidden
       footerNavComponent={
-        <Container alignItems={'center'}>
+        <Container alignItems={'center'} paddingBottom>
           <Container w={300}>
             <Button
               testID={TESTID.ONBOARDING_LEARN_CONTINUE}
@@ -27,35 +28,28 @@ const Learn: React.FC<LearnProps> & { navigatorStyle: NavigatorStyle } = props =
               buttonText={'Continue'}
               type={Button.Types.Primary}
               block={Button.Block.Filled}
-              onPress={() => props.navigator.push({ screen: 'onboarding2.CreateIdentity' })}
+              onPress={() =>
+                Navigation.push(props.componentId, {
+                  component: { name: SCREENS.CreateIdentity, options: { topBar: { elevation: 0, drawBehind: false } } },
+                })
+              }
             />
           </Container>
         </Container>
-      }
-    >
+      }>
       <Swiper
         style={{ marginTop: Device.isIOS ? 30 : 100 }}
         loop={false}
         autoplay
         bounces
         activeDotColor={Theme.colors.primary.brand}
-        paginationStyle={{ marginBottom: Device.isIOS ? -30 : -20 }}
-      >
+        paginationStyle={{ marginBottom: Device.isIOS ? -30 : -20 }}>
         {onboardingSlides.map((slide: OnboardingSwiperSlide) => {
           return <Slide key={slide.key} heading={slide.heading} content={slide.content} image={slide.image} />
         })}
       </Swiper>
     </Screen>
   )
-}
-
-Learn.navigatorStyle = {
-  drawUnderNavBar: true,
-  navBarTranslucent: true,
-  navBarTransparent: true,
-  navBarBackgroundColor: 'transparent',
-  navBarButtonColor: 'white',
-  topBarElevationShadowEnabled: false,
 }
 
 export default Learn

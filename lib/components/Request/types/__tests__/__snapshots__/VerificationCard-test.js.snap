@@ -5,7 +5,6 @@ ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <VerificationCard
     address={null}
-    attestationsForTypeAndValue={[Function]}
     authorizeRequest={[Function]}
     cancelRequest={[Function]}
     claims={
@@ -17,11 +16,7 @@ ShallowWrapper {
       ]
     }
     issuer={Object {}}
-    navigator={
-      FakeNavigator {
-        "event": [Function],
-      }
-    }
+    navigator={FakeNavigator {}}
     request={Object {}}
     showActions={true}
     title="loading"
@@ -52,6 +47,8 @@ ShallowWrapper {
           style={
             Object {
               "backgroundColor": "#FFFFFF",
+              "borderBottomColor": "rgba(216,216,216,1)",
+              "borderBottomWidth": 0.5,
               "padding": 22,
             }
           }
@@ -79,7 +76,7 @@ ShallowWrapper {
                 }
               }
             >
-              from: 
+              from:
               <Text
                 accessible={true}
                 allowFontScaling={true}
@@ -94,6 +91,15 @@ ShallowWrapper {
             <ExpirationItem />
           </Component>
         </Component>,
+        <UseCredentialCard
+          authorizeRequest={[Function]}
+          claim={
+            Object {
+              "loading": "loading",
+            }
+          }
+          request={Object {}}
+        />,
         <Component
           style={
             Object {
@@ -108,16 +114,11 @@ ShallowWrapper {
                 "loading": "loading",
               }
             }
-            navigator={
-              FakeNavigator {
-                "event": [Function],
-              }
-            }
           />
         </Component>,
         <AcceptCancelGroup
-          acceptText="Accept"
-          cancelText="Delete"
+          acceptText="Save"
+          cancelText="Decline"
           onAccept={[Function]}
           onCancel={[Function]}
         />,
@@ -157,7 +158,7 @@ ShallowWrapper {
                   }
                 }
               >
-                from: 
+                from:
                 <Text
                   accessible={true}
                   allowFontScaling={true}
@@ -175,6 +176,8 @@ ShallowWrapper {
           ],
           "style": Object {
             "backgroundColor": "#FFFFFF",
+            "borderBottomColor": "rgba(216,216,216,1)",
+            "borderBottomWidth": 0.5,
             "padding": 22,
           },
         },
@@ -199,7 +202,7 @@ ShallowWrapper {
                     }
                   }
                 >
-                  from: 
+                  from:
                   <Text
                     accessible={true}
                     allowFontScaling={true}
@@ -230,7 +233,7 @@ ShallowWrapper {
                   "accessible": true,
                   "allowFontScaling": true,
                   "children": Array [
-                    "from: ",
+                    "from:",
                     <Text
                       accessible={true}
                       allowFontScaling={true}
@@ -252,7 +255,7 @@ ShallowWrapper {
                 },
                 "ref": null,
                 "rendered": Array [
-                  "from: ",
+                  "from:",
                   Object {
                     "instance": null,
                     "key": undefined,
@@ -294,17 +297,27 @@ ShallowWrapper {
       Object {
         "instance": null,
         "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "authorizeRequest": [Function],
+          "claim": Object {
+            "loading": "loading",
+          },
+          "request": Object {},
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
         "nodeType": "class",
         "props": Object {
           "children": <NestedInfo
             data={
               Object {
                 "loading": "loading",
-              }
-            }
-            navigator={
-              FakeNavigator {
-                "event": [Function],
               }
             }
           />,
@@ -319,11 +332,9 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "class",
           "props": Object {
+            "componentId": undefined,
             "data": Object {
               "loading": "loading",
-            },
-            "navigator": FakeNavigator {
-              "event": [Function],
             },
           },
           "ref": null,
@@ -337,8 +348,8 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "function",
         "props": Object {
-          "acceptText": "Accept",
-          "cancelText": "Delete",
+          "acceptText": "Save",
+          "cancelText": "Decline",
           "onAccept": [Function],
           "onCancel": [Function],
         },
@@ -360,6 +371,8 @@ ShallowWrapper {
             style={
               Object {
                 "backgroundColor": "#FFFFFF",
+                "borderBottomColor": "rgba(216,216,216,1)",
+                "borderBottomWidth": 0.5,
                 "padding": 22,
               }
             }
@@ -387,7 +400,7 @@ ShallowWrapper {
                   }
                 }
               >
-                from: 
+                from:
                 <Text
                   accessible={true}
                   allowFontScaling={true}
@@ -402,6 +415,15 @@ ShallowWrapper {
               <ExpirationItem />
             </Component>
           </Component>,
+          <UseCredentialCard
+            authorizeRequest={[Function]}
+            claim={
+              Object {
+                "loading": "loading",
+              }
+            }
+            request={Object {}}
+          />,
           <Component
             style={
               Object {
@@ -416,16 +438,11 @@ ShallowWrapper {
                   "loading": "loading",
                 }
               }
-              navigator={
-                FakeNavigator {
-                  "event": [Function],
-                }
-              }
             />
           </Component>,
           <AcceptCancelGroup
-            acceptText="Accept"
-            cancelText="Delete"
+            acceptText="Save"
+            cancelText="Decline"
             onAccept={[Function]}
             onCancel={[Function]}
           />,
@@ -465,7 +482,7 @@ ShallowWrapper {
                     }
                   }
                 >
-                  from: 
+                  from:
                   <Text
                     accessible={true}
                     allowFontScaling={true}
@@ -483,6 +500,8 @@ ShallowWrapper {
             ],
             "style": Object {
               "backgroundColor": "#FFFFFF",
+              "borderBottomColor": "rgba(216,216,216,1)",
+              "borderBottomWidth": 0.5,
               "padding": 22,
             },
           },
@@ -507,7 +526,7 @@ ShallowWrapper {
                       }
                     }
                   >
-                    from: 
+                    from:
                     <Text
                       accessible={true}
                       allowFontScaling={true}
@@ -538,7 +557,7 @@ ShallowWrapper {
                     "accessible": true,
                     "allowFontScaling": true,
                     "children": Array [
-                      "from: ",
+                      "from:",
                       <Text
                         accessible={true}
                         allowFontScaling={true}
@@ -560,7 +579,7 @@ ShallowWrapper {
                   },
                   "ref": null,
                   "rendered": Array [
-                    "from: ",
+                    "from:",
                     Object {
                       "instance": null,
                       "key": undefined,
@@ -602,17 +621,27 @@ ShallowWrapper {
         Object {
           "instance": null,
           "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "authorizeRequest": [Function],
+            "claim": Object {
+              "loading": "loading",
+            },
+            "request": Object {},
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
           "nodeType": "class",
           "props": Object {
             "children": <NestedInfo
               data={
                 Object {
                   "loading": "loading",
-                }
-              }
-              navigator={
-                FakeNavigator {
-                  "event": [Function],
                 }
               }
             />,
@@ -627,11 +656,9 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "class",
             "props": Object {
+              "componentId": undefined,
               "data": Object {
                 "loading": "loading",
-              },
-              "navigator": FakeNavigator {
-                "event": [Function],
               },
             },
             "ref": null,
@@ -645,8 +672,8 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
-            "acceptText": "Accept",
-            "cancelText": "Delete",
+            "acceptText": "Save",
+            "cancelText": "Decline",
             "onAccept": [Function],
             "onCancel": [Function],
           },
