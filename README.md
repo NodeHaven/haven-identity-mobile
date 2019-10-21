@@ -1,1 +1,1 @@
-test/example application
+test/demo application 
